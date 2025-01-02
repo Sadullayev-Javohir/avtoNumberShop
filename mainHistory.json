@@ -1,0 +1,24 @@
+[
+    {
+        "AvtoNumberID": 3,
+        "AvtoNumber": "90R141RR",
+        "AvtoNumberCost": 14.0,
+        "AvtoNumberPutTime": "2025-01-02 12:46:03",
+        "AvtoNumberStatus": "Sotilgan",
+        "userID": 1,
+        "userName": "Javohir",
+        "userAddress": "Jizzax",
+        "AvtoNumberSoldTime": "2025-01-02 12:49:28"
+    },
+    {
+        "AvtoNumberID": 4,
+        "AvtoNumber": "40R141RR",
+        "AvtoNumberCost": 15.0,
+        "AvtoNumberPutTime": "2025-01-02 14:19:28",
+        "AvtoNumberStatus": "Sotilgan",
+        "userID": 2,
+        "userName": "Yusuf",
+        "userAddress": "Buxoro",
+        "AvtoNumberSoldTime": "2025-01-02 14:20:45"
+    }
+]

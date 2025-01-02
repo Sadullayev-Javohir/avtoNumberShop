@@ -9,11 +9,13 @@ avtoNumber = ["01", "10", "20", "25", "30", "40", "50", "60","70", "75", "80", "
 
 lastID = 0
 
+# keyingi ID funksiyasi
 def nextID():
     global lastID
     lastID += 1
     return lastID
 
+# oxirgi ID
 def LoadLastID():
     global lastID  
     try:
@@ -32,7 +34,7 @@ def space():
 def saveToJson():
     with open("numbers.json", "w") as json_file:
         json.dump(numberList, json_file, indent=4)
-    print(f"Ma'lumotlar muvaffaqqiyatli saqlandi")
+    
 
 # Json da malumotlarni o'qish
 def JsonRead():
@@ -40,14 +42,26 @@ def JsonRead():
     try:
         with open("numbers.json", "r") as json_file:
             numberList = json.load(json_file)
-        print("Malumotlar yuklandi")
-    except FileNotFoundError:
-        print("Fayl topilmadi")
     except json.JSONDecodeError:
-        print("Fayl bo'sh yoki noto'g'ri formatda")
         numberList = []
 
 
+# barcha tarixlarni saqlash
+def saveToMainHistoryJson():
+    with open("mainHistory.json", "w") as json_file:
+        json.dump(mainHistoryList, json_file, indent=4)
+
+# barcha tarixlarni o'qish
+def mainHistoryJsonRead():
+    global mainHistoryList
+    try:
+        with open("mainHistory.json", "r") as json_file:
+            mainHistoryList = json.load(json_file)
+    except json.JSONDecodeError:
+        mainHistoryList = []
+
+
+# raqam ekanligini tekshirish
 def isNum(cost):
     
     while True:
@@ -63,10 +77,10 @@ def isNum(cost):
             cost = input("Qaytadan narxini so'mda kiriting: ")
 
 
-
-
-
 numberList = []
+
+mainHistoryList = []
+mainHistoryDic = {}
 
 numberDict = {}
 
@@ -74,18 +88,26 @@ LoadLastID()
 
 JsonRead()
 
+mainHistoryJsonRead()
+
 
 # 1 Yangi raqam qo'shish
 def addNumber():
     global id
     while True:
         number = input("Raqam qo'shing: ")
-        for numDic in numberList:
-            if numDic["number"] == number:
-                space()
-                print("Bu raqam allaqachon mavjud! Iltimos, boshqa raqam kiriting.")
-                space()
-                break
+        if any(numDic["number"] == number for numDic in numberList):
+            space()
+            print("Bu raqam allaqachon mavjud! Iltimos, boshqa raqam kiriting.")
+            space()
+            continue
+
+        # Ikkinchi ro'yxatni tekshirish
+        if any(mainHistDic["AvtoNumber"] == number for mainHistDic in mainHistoryList):
+            space()
+            print("Bu raqam sotilgan! Iltimos, boshqa raqam kiriting.")
+            space()
+            continue
         else:
             first = number[:2]
             second = number[2:5]
@@ -185,7 +207,16 @@ def deleteNum():
 
 # 4 Sotilgan raqamlar statistikasi
 def soldNumStatistic():
-    pass
+    if mainHistoryList == []:
+        print()
+        print("Sotilgan raqamlar hali yo'q")
+        print()
+    else:   
+        
+        for mainHistoryDic in mainHistoryList:
+            print()
+            print(f"Foydalanuvchi:\n\tID: {mainHistoryDic["userID"]}, Foydalanuvchi ismi: {mainHistoryDic["userName"]}, Manzili: {mainHistoryDic["userAddress"]}, Raqma Sotilgan vaqti: {mainHistoryDic["AvtoNumberSoldTime"]}\nAvto Raqam:\n\tAvto Raqam ID: {mainHistoryDic["AvtoNumberID"]}, Avto Raqam: {mainHistoryDic["AvtoNumber"]}, Avto Raqam narxi: {mainHistoryDic["AvtoNumberCost"]}, Avto Raqam qo'yilgan vaqti: {mainHistoryDic["AvtoNumberPutTime"]}, Avto Raqam xolati: {mainHistoryDic["AvtoNumberStatus"]}")
+            print()
 
 
 
